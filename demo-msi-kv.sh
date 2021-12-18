@@ -1,9 +1,8 @@
 # Interactive demo:
-# Azure Key Vault & Managed Identities
+# Using a VM's Managed Identity to access a secret in an Azure Key Vault
 # You need az and a SSH key in ~/.ssh
 #
-# 1. create VM
-#    give System Assigned managed identity to the VM
+# 1. create a VM with a system assigned managed identity
 # 2. create Key Vault
 #    set access policy for the VM identity - secrets: get
 #    add a secret in the vault
@@ -39,20 +38,21 @@ az keyvault create -g $rgname -n $kvname -l $location -o yamlc
 az keyvault secret set --vault-name $kvname --name $secretname --value "super_secret_password" -o yamlc
 
 # key vault access policy
-SP_ID=$(az vm show -n $vmname -g $rgname --query identity.principalId -o tsv)
-echo Service Principal ID: $SP_ID
-az keyvault set-policy -n $kvname --object-id $SP_ID --secret-permissions get -o yamlc
+spid=$(az vm show -n $vmname -g $rgname --query identity.principalId -o tsv)
+echo Service Principal ID: $spid
+az keyvault set-policy -n $kvname --object-id $spid --secret-permissions get -o yamlc
 
 # key vault permissions (RBAC)
-#SP_ID=$(az vm show -n $vmname -g $rgname --query identity.principalId -o tsv)
+#spid=$(az vm show -n $vmname -g $rgname --query identity.principalId -o tsv)
 #SUB_ID=$(az account show --query id -o tsv)
 #KV_ID=/subscriptions/$SUB_ID/resourceGroups/$rgname/providers/Microsoft.KeyVault/vaults/$kvname
-#az role assignment create --assignee $SP_ID --role 'Key Vault Secrets User (preview)' --scope $KV_ID
+#az role assignment create --assignee $spid --role 'Key Vault Secrets User (preview)' --scope $KV_ID
 
 # connect to the vm
 ssh $vmpip
 
 ########## run the following _on the VM_ #########
+
 # use Azure Instance Metadata Service (IMDS) to get some info about the VM
 response=$(curl -s -H Metadata:true http://169.254.169.254/metadata/instance?api-version=2019-06-01)
 demo=$(echo $response | python -c 'import sys, json; print (json.load(sys.stdin)["compute"]["resourceGroupName"])')
@@ -71,10 +71,9 @@ secretvalue=$(echo $response | python -c 'import sys, json; print (json.load(sys
 echo Secret value: $secretvalue
 
 logout
+
 ##################################################
 
-# remove vm's identity
-#az vm identity remove -g $rgname -n $vmname --identities '[system]'
 # delete everything
 az group delete -n $rgname -y --no-wait
 

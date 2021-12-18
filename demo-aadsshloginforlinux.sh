@@ -6,7 +6,7 @@
 echo "Don't run this as a script!" && exit
 
 demo=demo$RANDOM
-rgname=${demo}rg
+rgname=${demo}
 vmname=${demo}vm
 
 # VM and extension
