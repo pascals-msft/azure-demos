@@ -1,5 +1,6 @@
-# Interactive demo: Key Vault & Managed Identities
-# you need az and a SSH key in ~/.ssh
+# Interactive demo:
+# Azure Key Vault & Managed Identities
+# You need az and a SSH key in ~/.ssh
 #
 # 1. create VM
 #    give System Assigned managed identity to the VM

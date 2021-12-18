@@ -1,5 +1,6 @@
-# Interactive demo: new linux VM in Azure
-# you need az and a SSH key in ~/.ssh
+# Interactive demo:
+# Create and connect to a linux VM in Azure
+# You need az and a SSH key in ~/.ssh
 
 echo "Don't run this as a script!" && exit
 
