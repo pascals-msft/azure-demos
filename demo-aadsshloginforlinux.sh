@@ -5,6 +5,12 @@
 
 echo "Don't run this as a script!" && exit
 
+# Azure login
+az login
+# Check connection
+az account show -o yamlc
+
+# *** begin here ***
 demo=demo$RANDOM
 rgname=${demo}
 vmname=${demo}vm
@@ -28,15 +34,18 @@ az role assignment create \
 
 # *** login with az ssh ***
 az ssh vm -n $vmname -g $rgname
+# try some commands, look at /var/log/auth.log... and logout
 
 # *** login with ssh ***
 pip=$(az vm show -g $rgname -n $vmname -d --query publicIps -o tsv)
 az ssh config -f ~/.ssh/config_${demo} -n $vmname -g $rgname
 cat ~/.ssh/config_${demo}
 ssh -F ~/.ssh/config_${demo} $pip
-
-# delete everything
+# try some commands, look at /var/log/auth.log... and logout
+# cleanup:
 rm ~/.ssh/${demo}config
 rm ~/.ssh/config_${demo}
 rm -rf ~/.ssh/az_ssh_config/
+
+# *** delete everything ***
 az group delete -g $rgname -y --no-wait
