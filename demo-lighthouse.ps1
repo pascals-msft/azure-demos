@@ -13,6 +13,7 @@ Write-Output "Don't run this as a script!"; Return
 # *** Connect to managing tenant ***
 Disconnect-AzAccount
 Connect-AzAccount
+Get-AzContext | Format-List
 
 # template parameters hash table *** to be customized ***
 $params = @{

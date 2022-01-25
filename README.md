@@ -12,4 +12,4 @@ Azure demos
 Prerequisites:
 * For shell-based demos (*.sh), [install Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
 * For PowerShell-based demos (*.ps1), [install PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows) and then [install the Azure Az PowerShell module](https://docs.microsoft.com/en-us/powershell/azure/install-az-ps).
-* For all demos, consider using [Visual Studio Code](https://code.visualstudio.com/).
+* For all demos, consider using [Visual Studio Code](https://code.visualstudio.com/). Assign a keyboard shortcut (For instance: `F8`) to the `Terminal: Run Selected Text in Active Terminal` action. This way you will be able to run commands from the demos more easily.
