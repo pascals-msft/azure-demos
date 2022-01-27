@@ -1,10 +1,12 @@
 # Interactive demo:
 # Onboard a customer to Azure Lighthouse, on a resource group
 # Example delegation for Microsoft Sentinel
+# Prerequisites:
+#   2 Azure subscriptions in 2 different tenants: one managing tenant and one customer tenant
 # References:
-# https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer
-# https://github.com/Azure/Azure-Lighthouse-samples (Resource Group Deployment)
-# https://docs.microsoft.com/en-us/azure/lighthouse/how-to/manage-sentinel-workspaces
+#   https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer
+#   https://github.com/Azure/Azure-Lighthouse-samples (Resource Group Deployment)
+#   https://docs.microsoft.com/en-us/azure/lighthouse/how-to/manage-sentinel-workspaces
 
 Write-Output "Don't run this as a script!"; Return
 
@@ -50,11 +52,11 @@ $params = @{
     )
 }
 
-# *** Connect to customer subscription/tenant ***
+# *** Connect to customer subscription - must be in a different tenant ***
 Disconnect-AzAccount
 Connect-AzAccount
 
-# deployment
+# deployment - must be at the subscription level
 New-AzDeployment `
     -Location "westeurope" `
     -TemplateUri "https://raw.githubusercontent.com/Azure/Azure-Lighthouse-samples/master/templates/delegated-resource-management/rg/rg.json" `
