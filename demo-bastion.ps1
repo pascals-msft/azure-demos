@@ -6,7 +6,7 @@
 #   Azure CLI for Windows - https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows
 #   An SSH key must be present at "${env:USERPROFILE}\.ssh\id_rsa"
 # References:
-#
+#   https://docs.microsoft.com/en-us/azure/bastion/connect-native-client-windows
 
 Write-Output "Don't run this as a script!"; Return
 
@@ -23,8 +23,7 @@ $vnetname = $demo + "vnet"
 $bastionname = $demo + "bastion"
 $vmname_win = $demo + "win"
 $vmname_linux = $demo + "linux"
-$kvname = $demo + "kv"
-$location = "westeurope"
+$location = "northeurope"
 
 # VM admin's username
 $vmadminname = "vmadmin"
@@ -51,7 +50,7 @@ $vm_linux = Get-AzVM -ResourceGroupName $rgname -Name $vmname_linux
 
 # Azure Bastion
 $bastionpip = New-AzPublicIpAddress -ResourceGroupName $rgname -Name "${bastionname}_pip" -Location $location -AllocationMethod Static -Sku Standard
-$bastion = New-AzBastion -Name $bastionname -ResourceGroupName $rgname -Sku "Standard" -VirtualNetwork $vnet -PublicIpAddress $bastionpip
+$bastion = New-AzBastion -Name $bastionname -ResourceGroupName $rgname -Sku "Standard" -VirtualNetwork $vnet -PublicIpAddress $bastionpip -Verbose
 
 # set the Bastion "Native client support" option
 az resource update --set properties.enableTunneling=true --ids $bastion.Id -o yamlc --verbose
