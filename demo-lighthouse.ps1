@@ -19,10 +19,10 @@ Get-AzContext | Format-List
 
 # template parameters hash table *** to be customized ***
 $params = @{
-    mspOfferName        = "demo42 managed Sentinel Plan"    # offer name
-    rgName              = "SOC-main"                        # target RG in the customer's subscription
-    mspOfferDescription = "demo42 managed Sentinel Plan"    # offer description
-    managedByTenantId   = (Get-AzContext).Tenant.Id         # managing tenant id
+    mspOfferName        = "Demo managed Sentinel Plan"  # offer name
+    rgName              = "SOC-main"                    # target RG in the customer's subscription
+    mspOfferDescription = "Demo managed Sentinel Plan"  # offer description
+    managedByTenantId   = (Get-AzContext).Tenant.Id     # managing tenant id
     authorizations      = (
         @{
             principalId = (Get-AzADGroup -DisplayName "SOC Security Analysts").Id               # managing tenant AAD group id

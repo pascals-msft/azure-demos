@@ -12,7 +12,7 @@ Write-Output "Don't run this as a script!"; Return
 
 # *** begin here ***
 
-# *** Connect to managing tenant ***
+# *** Connect to Azure ***
 Disconnect-AzAccount
 Connect-AzAccount
 Get-AzContext | Format-List
@@ -23,7 +23,7 @@ $vnetname = $demo + "vnet"
 $bastionname = $demo + "bastion"
 $vmname_win = $demo + "win"
 $vmname_linux = $demo + "linux"
-$location = "northeurope"
+$location = "westeurope"
 
 # VM admin's username
 $vmadminname = "vmadmin"
